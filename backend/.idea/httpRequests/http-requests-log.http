@@ -1,0 +1,32 @@
+GET http://localhost:8888/api/burgers
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-11-13T010222.200.html
+
+###
+
+GET http://localhost:8888/api/burgers
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+GET http://localhost:8080/api/burgers
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+GET http://localhost:8080/api/burgers
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+GET http://localhost:8080/api/burgers
+Accept: */*
+Cache-Control: no-cache
+
+###
+
