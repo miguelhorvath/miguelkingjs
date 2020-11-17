@@ -1,9 +1,9 @@
 function loadBurgers(){
-    $.get('//localhost:8888/api/burgers', {
+    $.get('http://localhost:8888/api/burgers', {
 
     })
     .done(function(res){
-        
+        console.log('REPÜL A FASZBURGER!!!');
     })
     .fail(function(){
         alert("error");
@@ -11,5 +11,5 @@ function loadBurgers(){
 }
 
 window.onload = function() {
-    loadBurgers();
+    //loadBurgers();
 };
