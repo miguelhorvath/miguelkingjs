@@ -130,5 +130,5 @@ $( "#sendBtn" ).click(function() {
  });
 
 window.onload = function() {
-    loadBurgers();
+    //loadBurgers();
 };
