@@ -1,4 +1,4 @@
-function editBurger(button){
+function editUser(button){
 
     let url = (window.location).href;
     let id = url.substring(url.lastIndexOf('?') + 1);
@@ -18,7 +18,7 @@ function editBurger(button){
         });
 }
 
-function deleteBurger(button){
+function deleteUser(button){
     
     let id = $(button).data("user-id");
 
@@ -61,17 +61,17 @@ function loadUsers(){
             $(editButton).text('Edit');
             $(deleteButton).text('Delete');
             
-            editButton.setAttribute("href", 'http://jsrest.test/users/views/users.edit.html?' + users[i].id);
+            editButton.setAttribute("href", 'http://jsrest.dev/users/views/users.edit.html?' + users[i].id);
             editButton.setAttribute("data-user-id", users[i].id);
             editButton.setAttribute("data-user-first_name", users[i].first_name);
             editButton.setAttribute("data-user-last_name", users[i].last_name);
             $( editButton ).click(function () {
-                window.location='http://jsrest.test/users/views/users.edit.html?' + users[i].id;
+                window.location='http://jsrest.dev/users/views/users.edit.html?' + users[i].id;
             });
 
             deleteButton.setAttribute("data-user-id", users[i].id);
             $( deleteButton ).click(function () {
-                deleteBurger(this);
+                deleteUser(this);
             });
 
             $(tbody).append(tr);
@@ -102,7 +102,7 @@ $('#confirmBtn').click(function (){
             'last_name': lastNameInput.val()
        })
         .done(function() {            
-            window.location="http://jsrest.test/users/views/users.index.html";
+            window.location="http://jsrest.dev/users/views/users.index.html";
         })
         .fail(function(error) {
            console.log(error);
@@ -120,7 +120,7 @@ $( "#sendBtn" ).click(function() {
             'last_name': lastNameInput.val()
        })
         .done(function() {            
-            window.location="http://jsrest.test/users/views/users.index.html";
+            window.location="http://jsrest.dev/users/views/users.index.html";
         })
         .fail(function(error) {
            console.log(error);

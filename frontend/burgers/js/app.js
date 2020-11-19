@@ -62,12 +62,12 @@ function loadBurgers(){
             $(editButton).text('Edit');
             $(deleteButton).text('Delete');
             
-            editButton.setAttribute("href", 'http://jsrest.test/burgers/views/burgers.edit.html?' + burgers[i].id);
+            editButton.setAttribute("href", 'http://jsrest.dev/burgers/views/burgers.edit.html?' + burgers[i].id);
             editButton.setAttribute("data-burger-id", burgers[i].id);
             editButton.setAttribute("data-burger-name", burgers[i].name);
             editButton.setAttribute("data-burger-value", burgers[i].value);
             $( editButton ).click(function () {
-                window.location='http://jsrest.test/burgers/views/burgers.edit.html?' + burgers[i].id;
+                window.location='http://jsrest.dev/burgers/views/burgers.edit.html?' + burgers[i].id;
             });
 
             deleteButton.setAttribute("data-burger-id", burgers[i].id);
@@ -103,7 +103,7 @@ $('#confirmBtn').click(function (){
             'value': valueInput.val()
        })
         .done(function() {            
-            window.location="http://jsrest.test/burgers/views/burgers.index.html";
+            window.location="http://jsrest.dev/burgers/views/burgers.index.html";
         })
         .fail(function(error) {
            console.log(error);
@@ -121,7 +121,7 @@ $( "#sendBtn" ).click(function() {
             'value': valueInput.val()
        })
         .done(function() {            
-            window.location="http://jsrest.test/burgers/views/burgers.index.html";
+            window.location="http://jsrest.dev/burgers/views/burgers.index.html";
         })
         .fail(function(error) {
            console.log(error);
@@ -130,5 +130,5 @@ $( "#sendBtn" ).click(function() {
  });
 
 window.onload = function() {
-    //loadBurgers();
+    loadBurgers();
 };

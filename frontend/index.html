@@ -1,23 +1,61 @@
-<!doctype html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="663738583895-j4jqbv3239r6ftqimkbv1fic036oe8cc.apps.googleusercontent.com">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <title>Hello, world!</title>
+    <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
   </head>
-  <body style="background-color: #663399;">
-      <div class="container" style="border:1px solid black; padding: 50px 50px 50px 50px; margin-top:250px; border-radius:35px; background-color:lightgray">
-          <div class="row">
-              <div class="col-12">
-                <h1>Mit szeretnél látni?</h1>
-                <a class="btn btn-primary" href="/burgers/views/index.html">Szendvicseket</a>
-                <a class="btn btn-danger" href="/users/views/index.html">Usereket</a>
-              </div>
-          </div>
+  <body>
+    <div class="container" style="margin-top:250px; border:1px solid black; padding:100px 100px 100px 100px;">
+      <div class="row">
+        <div class="col">
+          <div style="width:200px" class="g-signin2" data-onsuccess="onSignIn" data-theme="dark" id="btnGoogle"></div><br>
+        </div>
+        <div class="col">
+          <button class="btn btn-danger d-none" id="signOutBtn" onclick="signOut()">Sign out</button><br><br>
+        </div>
+        <div class="col">
+          <a class="btn btn-warning d-none" id="goToLoginBtn" href="login.html">Menj az oldalra</a>
+        </div>
       </div>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    </div>
+    <script>
+      function init() {
+        gapi.load('auth2');
+      }
+      function onSignIn(googleUser) {
+
+        if (googleUser.isSignedIn()) {
+
+          $('#signOutBtn').removeClass('d-none');
+          $('#goToLoginBtn').removeClass('d-none');
+          $('#btnGoogle').addClass('d-none');
+
+          $.post('http://localhost:8888/api/login/verify', {
+            'email': googleUser.getBasicProfile().getEmail(),
+            'google_token': googleUser.getAuthResponse().id_token
+          })
+          .done((res) => {
+            console.log(res);
+          })
+          .fail((res) =>  {
+            console.log(res);
+          })
+        }
+      }
+      
+      function signOut(){
+        let auth2 = gapi.auth2.getAuthInstance();
+        gapi.auth2.getAuthInstance().signOut().then(function(){
+          console.log('User signed out');
+          $('#signOutBtn').addClass('d-none');
+          $('#goToLoginBtn').addClass('d-none');
+          $('#btnGoogle').removeClass('d-none');
+        })
+      }  
+    </script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   </body>
 </html>

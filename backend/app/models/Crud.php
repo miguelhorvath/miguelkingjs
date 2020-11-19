@@ -45,6 +45,32 @@ class Crud extends Database implements CrudInterface
         return $this;
     }
 
+    public function where($filters)
+    {
+        $query = '';
+
+        foreach($filters as $key => $value) {
+            $query .= $key . ' = "'. $value . '"';
+            $query .= ' AND ';
+        }
+
+        $query .= ' 1 = 1';
+        
+        $query = "SELECT * FROM $this->tableName WHERE " . $query;
+        $result = static::$connection->query($query);
+
+        if ($result->num_rows > 0) {
+            $row = mysqli_fetch_assoc($result);
+        } else {
+            return NULL;
+        }
+
+        foreach ($row as $key => $value) {
+            call_user_func([$this, 'set'.$key], $value);
+        }
+        return $this;
+    }
+
     public function show($id)
     {
         $query = "SELECT * FROM $this->tableName WHERE id='$id'";

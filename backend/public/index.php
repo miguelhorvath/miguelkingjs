@@ -26,6 +26,8 @@ $router->mount('/api', function () use ($router){
     $router->get('/users/{id}/edit', '\App\Controllers\UserController@show');
     $router->post('/users/{id}/update', '\App\Controllers\UserController@update');
     $router->post('/users/{id}/delete', '\App\Controllers\UserController@delete');
+
+    $router->post('/login/verify', 'App\Controllers\AuthController@store');
 });
 
 $router->run();
