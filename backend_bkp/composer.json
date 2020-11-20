@@ -1,0 +1,20 @@
+{
+    "name": "miguel/jsrest",
+    "authors": [
+        {
+            "name": "Miguel",
+            "email": "miguel@example.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.2",
+        "bramus/router": "~1.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\Models\\": "app/models/",
+            "App\\Controllers\\": "app/controllers/",
+            "App\\Models\\Interfaces\\": "app/models/interfaces"
+        }
+    }
+}

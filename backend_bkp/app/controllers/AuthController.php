@@ -20,7 +20,7 @@ class AuthController
         return $attributes;
     }
 
-    public function store()
+    public function show()
     {
         $user = new User();
         $user->where($_POST);

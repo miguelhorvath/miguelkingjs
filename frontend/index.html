@@ -33,7 +33,10 @@
 
           $.post('http://localhost:8888/api/login/verify', {
             'email': googleUser.getBasicProfile().getEmail(),
-            'google_token': googleUser.getAuthResponse().id_token
+            'first_name':googleUser.getBasicProfile().getGivenName(),
+            'last_name':googleUser.getBasicProfile().getFamilyName(),
+            'google_token': googleUser.getAuthResponse().id_token,
+            
           })
           .done((res) => {
             console.log(res);

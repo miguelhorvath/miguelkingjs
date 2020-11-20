@@ -55,8 +55,9 @@ class Crud extends Database implements CrudInterface
         }
 
         $query .= ' 1 = 1';
-        
+
         $query = "SELECT * FROM $this->tableName WHERE " . $query;
+        
         $result = static::$connection->query($query);
 
         if ($result->num_rows > 0) {
