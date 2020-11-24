@@ -19,13 +19,6 @@ class AuthController extends BaseController
 
         $user = DB::select("SELECT * FROM users WHERE email='$email'");
 
-        foreach($user as $data){
-            $dbEmail = $data->email;
-            if($dbEmail == $email){
-                
-            }
-        }
-
         if(count($user)>0){
             echo 'A User létezik az adatbázisban';
         } else {
