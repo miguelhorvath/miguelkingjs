@@ -23,15 +23,16 @@ $router->get('/', function () use ($router) {
 $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('burgers', 'BurgerController@index');
     $router->post('burgers', 'BurgerController@store');
-    $router->get('burgers/{id}', 'BurgerController@show');
-    $router->put('burgers/{id}', 'BurgerController@update');
-    $router->delete('burgers/{id}', 'BurgerController@destroy');
+    $router->get('burgers/{id}/edit', 'BurgerController@show');
+    $router->post('burgers/{id}/update', 'BurgerController@update');
+    $router->post('burgers/{id}/delete', 'BurgerController@destroy');
+
 
     $router->get('users', 'UserController@index');
     $router->post('users', 'UserController@store');
-    $router->get('users/{id}', 'UserController@show');
-    $router->put('users/{id}', 'UserController@update');
-    $router->delete('users/{id}', 'UserController@destroy');
+    $router->get('users/{id}/edit', 'UserController@show');
+    $router->post('users/{id}/update', 'UserController@update');
+    $router->post('users/{id}/delete', 'UserController@destroy');
 
     $router->post('login/verify', 'AuthController@check');
 });

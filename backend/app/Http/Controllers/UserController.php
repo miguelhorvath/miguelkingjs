@@ -10,7 +10,7 @@ class UserController extends BaseController
 {
     public function index()
     {
-        $users = DB::select("SELECT first_name, last_name, email FROM users");
+        $users = DB::select("SELECT id, first_name, last_name, email FROM users");
 
         return $users;
     }

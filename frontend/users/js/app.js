@@ -9,21 +9,24 @@ function editUser(button){
         'last_name': $(button).data("user-last_name")
     })
         .done(function(res){
-            let user = JSON.parse(res);
-            $('#first_name').val(user['first_name']);
-            $('#last_name').val(user['last_name']);
+            for(let i=0;i<res.length;i++){
+                $('#first_name').val(res[0]['first_name']);
+                $('#last_name').val(res[0]['last_name']);
+            }
         })
         .fail(function() {
             alert( "error" );
         });
 }
 
+
 function deleteUser(button){
     
     let id = $(button).data("user-id");
 
     $.post('http://localhost:8888/api/users/' + id + '/delete', {
-            'id': $(button).data("user-id")
+            'id': $(button).data("user-id"),
+            'type': 'DELETE'
         })
         .done(function(){
             window.location.reload();
@@ -38,7 +41,6 @@ function loadUsers(){
 
     })
     .done(function(res){
-        let users = JSON.parse(res);
         let tbody = document.getElementsByTagName('tbody');
         let thName = document.getElementById('thName');
         let thValue = document.getElementById('thValue');
@@ -48,7 +50,7 @@ function loadUsers(){
         $(thValue).text('Vezetéknév');
         $(thOperations).text('Műveletek');
 
-        for(let i=0;i<users.length;i++){
+        for(let i=0;i<res.length;i++){
             let tr = document.createElement('tr');
             let tdFirstName = document.createElement('td');
             let tdLastName = document.createElement('td');
@@ -56,20 +58,20 @@ function loadUsers(){
             let editButton = document.createElement('button');
             let deleteButton = document.createElement('button');
 
-            $(tdFirstName).text(users[i].first_name);
-            $(tdLastName).text(users[i].last_name);
+            $(tdFirstName).text(res[i].first_name);
+            $(tdLastName).text(res[i].last_name);
             $(editButton).text('Edit');
             $(deleteButton).text('Delete');
             
-            editButton.setAttribute("href", 'http://jsrest.dev/users/views/users.edit.html?' + users[i].id);
-            editButton.setAttribute("data-user-id", users[i].id);
-            editButton.setAttribute("data-user-first_name", users[i].first_name);
-            editButton.setAttribute("data-user-last_name", users[i].last_name);
+            editButton.setAttribute("href", 'http://jsrest.dev/users/views/users.edit.html?' + res[i].id);
+            editButton.setAttribute("data-user-id", res[i].id);
+            editButton.setAttribute("data-user-first_name", res[i].first_name);
+            editButton.setAttribute("data-user-last_name", res[i].last_name);
             $( editButton ).click(function () {
-                window.location='http://jsrest.dev/users/views/users.edit.html?' + users[i].id;
+                window.location='http://jsrest.dev/users/views/users.edit.html?' + res[i].id;
             });
 
-            deleteButton.setAttribute("data-user-id", users[i].id);
+            deleteButton.setAttribute("data-user-id", res[i].id);
             $( deleteButton ).click(function () {
                 deleteUser(this);
             });
@@ -99,7 +101,8 @@ $('#confirmBtn').click(function (){
 
     $.post('http://localhost:8888/api/users/' + id + '/update', {
             'first_name': firstNameInput.val(),
-            'last_name': lastNameInput.val()
+            'last_name': lastNameInput.val(),
+            'type': 'PUT'
        })
         .done(function() {            
             window.location="http://jsrest.dev/users/views/users.index.html";

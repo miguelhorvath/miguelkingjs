@@ -20,13 +20,17 @@
       </div>
     </div>
     <script>
+      
       function init() {
         gapi.load('auth2');
       }
+
       function onSignIn(googleUser) {
 
-        if (googleUser.isSignedIn()) {
+       localStorage.setItem('email', googleUser.getBasicProfile().getEmail());
 
+        if (googleUser.isSignedIn()) {
+  
           $('#signOutBtn').removeClass('d-none');
           $('#goToLoginBtn').removeClass('d-none');
           $('#btnGoogle').addClass('d-none');
@@ -36,21 +40,22 @@
             'first_name':googleUser.getBasicProfile().getGivenName(),
             'last_name':googleUser.getBasicProfile().getFamilyName(),
             'google_token': googleUser.getAuthResponse().id_token,
-            
           })
-          .done((res) => {
+          .done(function(res){
             console.log(res);
+            console.log(localStorage);
           })
-          .fail((res) =>  {
-            console.log(res);
+          .fail(function(error){
+            console.log(error);
           })
-        }
+        } 
       }
       
       function signOut(){
         let auth2 = gapi.auth2.getAuthInstance();
         gapi.auth2.getAuthInstance().signOut().then(function(){
           console.log('User signed out');
+          localStorage.clear();
           $('#signOutBtn').addClass('d-none');
           $('#goToLoginBtn').addClass('d-none');
           $('#btnGoogle').removeClass('d-none');

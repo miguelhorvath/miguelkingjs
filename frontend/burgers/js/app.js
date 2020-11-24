@@ -9,9 +9,10 @@ function editBurger(button){
         'value': $(button).data("burger-value")
     })
         .done(function(res){
-            let burger = JSON.parse(res);
-            $('#name').val(burger['name']);
-            $('#value').val(burger['value']);
+           for(let i=0;i<res.length;i++){
+            $('#name').val(res[0]['name']);
+            $('#value').val(res[0]['value']);
+           }
         })
         .fail(function() {
             alert( "error" );
@@ -23,8 +24,9 @@ function deleteBurger(button){
     
     let id = $(button).data("burger-id");
 
-    $.post('http://localhost:8888/api/burgers/' + id + '/delete', {
-            'id': $(button).data("burger-id")
+    $.post('http://localhost:8888/api/burgers/' + id+ '/delete', {
+            'id': $(button).data("burger-id"),
+            'type': 'DELETE'
         })
         .done(function(){
             window.location.reload();
@@ -39,7 +41,6 @@ function loadBurgers(){
 
     })
     .done(function(res){
-        let burgers = JSON.parse(res);
         let tbody = document.getElementsByTagName('tbody');
         let thName = document.getElementById('thName');
         let thValue = document.getElementById('thValue');
@@ -49,7 +50,7 @@ function loadBurgers(){
         $(thValue).text('Ár');
         $(thOperations).text('Műveletek');
 
-        for(let i=0;i<burgers.length;i++){
+        for(let i=0;i<res.length;i++){
             let tr = document.createElement('tr');
             let tdName = document.createElement('td');
             let tdValue = document.createElement('td');
@@ -57,20 +58,20 @@ function loadBurgers(){
             let editButton = document.createElement('button');
             let deleteButton = document.createElement('button');
 
-            $(tdName).text(burgers[i].name);
-            $(tdValue).text(burgers[i].value);
+            $(tdName).text(res[i].name);
+            $(tdValue).text(res[i].value);
             $(editButton).text('Edit');
             $(deleteButton).text('Delete');
             
-            editButton.setAttribute("href", 'http://jsrest.dev/burgers/views/burgers.edit.html?' + burgers[i].id);
-            editButton.setAttribute("data-burger-id", burgers[i].id);
-            editButton.setAttribute("data-burger-name", burgers[i].name);
-            editButton.setAttribute("data-burger-value", burgers[i].value);
+            editButton.setAttribute("href", 'http://jsrest.dev/burgers/views/burgers.edit.html?' + res[i].id);
+            editButton.setAttribute("data-burger-id", res[i].id);
+            editButton.setAttribute("data-burger-name", res[i].name);
+            editButton.setAttribute("data-burger-value", res[i].value);
             $( editButton ).click(function () {
-                window.location='http://jsrest.dev/burgers/views/burgers.edit.html?' + burgers[i].id;
+                window.location='http://jsrest.dev/burgers/views/burgers.edit.html?' + res[i].id;
             });
 
-            deleteButton.setAttribute("data-burger-id", burgers[i].id);
+            deleteButton.setAttribute("data-burger-id", res[i].id);
             $( deleteButton ).click(function () {
                 deleteBurger(this);
             });
@@ -100,7 +101,8 @@ $('#confirmBtn').click(function (){
 
     $.post('http://localhost:8888/api/burgers/' + id + '/update', {
             'name': nameInput.val(),
-            'value': valueInput.val()
+            'value': valueInput.val(),
+            'type': 'PUT'
        })
         .done(function() {            
             window.location="http://jsrest.dev/burgers/views/burgers.index.html";

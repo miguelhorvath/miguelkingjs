@@ -17,9 +17,16 @@ class AuthController extends BaseController
         $googleToken = $request->input('google_token');
         $email = $request->input('email');
 
-        $users = DB::select("SELECT * FROM users WHERE email='$email'");
+        $user = DB::select("SELECT * FROM users WHERE email='$email'");
 
-        if(count($users)>0){
+        foreach($user as $data){
+            $dbEmail = $data->email;
+            if($dbEmail == $email){
+                
+            }
+        }
+
+        if(count($user)>0){
             echo 'A User létezik az adatbázisban';
         } else {
             echo 'A User nem létezik az adatbázisban';
